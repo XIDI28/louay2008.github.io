@@ -3,169 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOUAY CORE | 2070 PROTOCOL</title>
+    <title>LOUAY CORE | MASTER_NODE_8762532793</title>
     <style>
-        :root { --blue: #00f3ff; --purple: #bc13fe; --bg: #020205; }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Consolas', monospace; }
+        :root { --blue: #00f3ff; --purple: #bc13fe; --bg: #010103; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Consolas', 'Courier New', monospace; }
         body { background: var(--bg); color: white; overflow-x: hidden; user-select: none; }
 
         .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; text-align: center; }
-        .glitch-title { font-size: 4rem; color: var(--blue); text-shadow: 2px 2px var(--purple); letter-spacing: 12px; font-weight: 900; cursor: pointer; }
+        .glitch-title { font-size: 4rem; color: var(--blue); text-shadow: 3px 3px var(--purple); letter-spacing: 15px; font-weight: 900; cursor: pointer; transition: 0.3s; }
+        .glitch-title:hover { transform: scale(1.05); text-shadow: 0 0 20px var(--blue); }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 60px; }
-        .card { background: rgba(5, 5, 15, 0.9); border: 1px solid rgba(0, 243, 255, 0.1); padding: 35px; transition: 0.5s; position: relative; border-radius: 4px; }
-        .card:hover { border-color: var(--blue); transform: translateY(-10px) rotateX(5deg); box-shadow: 0 10px 40px rgba(0,243,255,0.2); }
-        
-        .card h3 { color: var(--blue); margin-bottom: 15px; font-size: 1.5rem; text-transform: uppercase; }
-        .card p { color: #666; font-size: 0.9rem; line-height: 1.6; }
+        .card { background: rgba(10, 10, 25, 0.9); border: 1px solid rgba(0, 243, 255, 0.1); padding: 35px; transition: 0.5s; position: relative; border-radius: 2px; }
+        .card:hover { border-color: var(--blue); transform: translateY(-10px); box-shadow: 0 10px 40px rgba(0,243,255,0.3); }
+        .card h3 { color: var(--blue); margin-bottom: 15px; font-size: 1.5rem; text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+        .card p { color: #888; font-size: 0.9rem; line-height: 1.6; }
 
-        /* Ghost Admin Panel */
+        /* Ghost Admin Terminal */
         #ghostAdmin {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000;
-            z-index: 10000; display: none; padding: 30px; border: 2px solid var(--blue);
-            animation: fadeIn 0.3s;
+            z-index: 10000; display: none; padding: 30px; border: 2px solid var(--purple);
+            animation: bootUp 0.5s;
         }
-        @keyframes fadeIn { from {opacity: 0} to {opacity: 1} }
-        .admin-box { max-width: 900px; margin: 0 auto; }
-        .visitor-row { background: #050505; padding: 12px; margin-bottom: 8px; border-left: 4px solid var(--purple); font-size: 0.85rem; color: #0f0; }
+        @keyframes bootUp { from {opacity: 0; transform: scale(0.9);} to {opacity: 1; transform: scale(1);} }
+        .visitor-row { background: #080808; padding: 12px; margin-bottom: 8px; border-left: 5px solid var(--blue); font-size: 0.85rem; color: #00ff00; }
 
         .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 1px solid var(--blue); padding: 12px 25px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--blue); z-index: 999; }
         
-        .btn-ctrl { background: transparent; border: 1px solid var(--purple); color: var(--purple); padding: 8px 15px; cursor: pointer; margin: 5px; font-weight: bold; transition: 0.3s; }
-        .btn-ctrl:hover { background: var(--purple); color: white; box-shadow: 0 0 20px var(--purple); }
+        .btn-ctrl { background: transparent; border: 1px solid var(--blue); color: var(--blue); padding: 10px 20px; cursor: pointer; margin: 5px; font-weight: bold; transition: 0.3s; text-transform: uppercase; }
+        .btn-ctrl:hover { background: var(--blue); color: #000; box-shadow: 0 0 20px var(--blue); }
 
-        .scan-line { width: 100%; height: 2px; background: rgba(0, 243, 255, 0.1); position: fixed; top: 0; left: 0; z-index: 10001; pointer-events: none; animation: scanAnim 6s linear infinite; }
+        .scan-line { width: 100%; height: 3px; background: rgba(188, 19, 254, 0.2); position: fixed; top: 0; z-index: 10001; pointer-events: none; animation: scanAnim 8s linear infinite; }
         @keyframes scanAnim { from { top: 0; } to { top: 100%; } }
     </style>
 </head>
-<body onclick="initAudio()">
+<body onclick="activateSystem()">
 
     <div class="scan-line"></div>
-    <audio id="mainMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    <audio id="coreMusic" loop>
+        <source src="https://cdn.pixabay.com/audio/2023/05/23/audio_03d9716611.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
         <header>
-            <div style="font-size: 0.75rem; color: var(--purple); margin-bottom: 15px;">[ ENCRYPTED_CONNECTION_ESTABLISHED ]</div>
-            <h1 class="glitch-title" id="secretTrigger">LOUAY</h1>
-            <p style="color: #444; margin-top: 15px; letter-spacing: 4px;">NEURAL ARCHITECT | 2070 PROTOCOL</p>
+            <div style="font-size: 0.7rem; color: var(--purple); margin-bottom: 10px;">ID: 8762532793 | STATUS: VERIFIED</div>
+            <h1 class="glitch-title" id="adminTrigger">LOUAY</h1>
+            <p style="color: #555; margin-top: 15px; letter-spacing: 5px;">CYBERNETIC OPERATIONS | 2070 GLOBAL</p>
         </header>
 
         <div class="grid">
-            <div class="card"><h3>SMM_SYSTEM</h3><p>أتمتة خدمات التواصل الاجتماعي عبر واجهات API فائقة السرعة.</p></div>
-            <div class="card"><h3>BARIDI_CIPHER</h3><p>حلول الدفع الآمنة وتشفير المعاملات المالية المحلية.</p></div>
-            <div class="card"><h3>TERMUX_GEN</h3><p>سكريبتات بايثون متطورة للأتمتة وفحص الثغرات الأمنية.</p></div>
+            <div class="card"><h3>SMM_PROTOCOL</h3><p>أتمتة كاملة لخدمات التواصل الاجتماعي عبر بروتوكولات API سحابية مشفرة.</p></div>
+            <div class="card"><h3>CIPHER_PAY_DZ</h3><p>بوابات دفع آمنة ومعالجة معاملات Baridimob بنظام التشفير العسكري.</p></div>
+            <div class="card"><h3>ROOT_SCRIPTS</h3><p>تطوير أدوات الأتمتة المخصصة لبيئات Termux والتحكم في الشبكات.</p></div>
         </div>
         
-        <a href="https://t.me/VJF_X" style="display:inline-block; margin-top: 60px; color: var(--blue); text-decoration: none; border: 1px solid; padding: 15px 40px; font-weight: bold; letter-spacing: 2px;">SYNC_WITH_OPERATOR</a>
+        <a href="https://t.me/VJF_X" style="display:inline-block; margin-top: 60px; color: var(--blue); text-decoration: none; border: 1px solid; padding: 15px 40px; font-weight: bold; letter-spacing: 3px; background: rgba(0, 243, 255, 0.05);">CONNECT_MASTER</a>
     </div>
 
     <div id="ghostAdmin">
-        <div class="admin-box">
+        <div style="max-width: 900px; margin: 0 auto;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2 style="color: var(--blue); letter-spacing: 5px;">GHOST_TERMINAL_v5.0</h2>
-                <button onclick="hidePanel()" style="color: red; background: none; border: none; font-size: 1.5rem; cursor: pointer;">[ EXIT ]</button>
+                <h2 style="color: var(--purple); letter-spacing: 5px;">LOUAY_TERMINAL [ADMIN]</h2>
+                <button onclick="hideAdmin()" style="color: red; background: none; border: none; font-size: 1.5rem; cursor: pointer;">[ CLOSE ]</button>
             </div>
-            <hr style="margin: 20px 0; border: 0.5px solid #111;">
+            <div style="margin: 20px 0; color: #444; font-size: 0.8rem;">OPERATOR ID: 8762532793 | ACCESS_LEVEL: GOD_MODE</div>
             
-            <div class="controls" style="margin-bottom: 30px;">
-                <p style="margin-bottom: 10px; color: #444;">COMMAND_CENTER:</p>
-                <button class="btn-ctrl" onclick="sendFakeAlert()">SEND_ALERT</button>
-                <button class="btn-ctrl" onclick="forceRedirect()">EJECT_VISITORS</button>
-                <button class="btn-ctrl" onclick="clearData()">WIPE_LOGS</button>
+            <div style="margin-bottom: 30px;">
+                <button class="btn-ctrl" onclick="alert('SYSTEM NOTICE: Broadcast sent to all nodes.')">SEND_ALERT</button>
+                <button class="btn-ctrl" onclick="window.location.href='https://google.com'">EJECT_ALL</button>
+                <button class="btn-ctrl" onclick="localStorage.clear(); location.reload();" style="border-color: red; color: red;">WIPE_MEMORY</button>
             </div>
 
-            <h3 style="color: var(--purple); margin-bottom: 15px;">LIVE_VISITOR_LOGS:</h3>
-            <div id="logArea" style="height: 55vh; overflow-y: auto; background: #050505; padding: 15px; border: 1px solid #111;">
+            <h3 style="color: var(--blue); margin-bottom: 15px;">LIVE_ACTIVITY_LOGS:</h3>
+            <div id="visitorLogs" style="height: 55vh; overflow-y: auto; background: #050505; padding: 15px; border: 1px solid #111;">
                 </div>
         </div>
     </div>
 
     <div class="bottom-bar">
-        <div>NODE_DZ: <span id="cpuUsage">0%</span></div>
+        <div>SERVER: <span style="color: #0f0;">ALGERIA_CORE</span></div>
         <div id="clock">00:00:00</div>
-        <div>ENCRYPTION: 256-BIT</div>
+        <div>IP: <span id="userIp">---.---.---</span></div>
     </div>
 
     <script>
-        const audio = document.getElementById('mainMusic');
-        let audioActive = false;
+        const audio = document.getElementById('coreMusic');
+        let sysActive = false;
 
-        // 1. إدارة الموسيقى (فقط داخل الموقع)
-        function initAudio() {
-            if(!audioActive) {
-                audio.play();
-                audioActive = true;
+        // 1. إدارة الموسيقى (بمجرد لمس الشاشة)
+        function activateSystem() {
+            if(!sysActive) {
+                audio.play().catch(e => console.log("Audio Error"));
+                sysActive = true;
             }
         }
         document.addEventListener("visibilitychange", () => {
             if (document.hidden) audio.pause();
-            else if(audioActive) audio.play();
+            else if(sysActive) audio.play();
         });
 
-        // 2. نظام الباسورد السري (0781262864)
-        let passBuffer = "";
+        // 2. الدخول السري (0781262864) أو 5 ضغطات على الاسم
+        let passKey = "";
         window.addEventListener("keydown", (e) => {
-            passBuffer += e.key;
-            if(passBuffer.includes("0781262864")) {
-                showPanel();
-                passBuffer = "";
-            }
-            if(passBuffer.length > 20) passBuffer = ""; // تفريغ الذاكرة
+            passKey += e.key;
+            if(passKey.includes("0781262864")) { showAdmin(); passKey = ""; }
+            if(passKey.length > 15) passKey = "";
         });
 
-        // للهاتف: 5 ضغطات على كلمة LOUAY
-        let tCounts = 0;
-        document.getElementById('secretTrigger').onclick = () => {
-            tCounts++;
-            if(tCounts >= 5) {
-                showPanel();
-                tCounts = 0;
-            }
+        let clickCounter = 0;
+        document.getElementById('adminTrigger').onclick = () => {
+            clickCounter++;
+            if(clickCounter >= 5) { showAdmin(); clickCounter = 0; }
         };
 
-        function showPanel() { document.getElementById('ghostAdmin').style.display = 'block'; }
-        function hidePanel() { document.getElementById('ghostAdmin').style.display = 'none'; }
+        function showAdmin() { document.getElementById('ghostAdmin').style.display = 'block'; }
+        function hideAdmin() { document.getElementById('ghostAdmin').style.display = 'none'; }
 
-        // 3. تتبع الزوار (Logging)
-        async function trackVisitor() {
+        // 3. تتبع الزوار (IP و الموقع)
+        async function runTracker() {
             try {
                 const res = await fetch('https://ipapi.co/json/');
                 const d = await res.json();
-                const visitor = {
+                document.getElementById('userIp').innerText = d.ip;
+                const log = {
                     ip: d.ip,
-                    loc: `${d.city}, ${d.country_name}`,
-                    agent: navigator.userAgent.split(')')[0].split('(')[1] || "Mobile",
+                    city: d.city,
+                    country: d.country_name,
+                    ua: navigator.userAgent.includes("Android") ? "Android" : "iOS/PC",
                     time: new Date().toLocaleTimeString()
                 };
-                let history = JSON.parse(localStorage.getItem('vLogs') || '[]');
-                history.unshift(visitor);
-                localStorage.setItem('vLogs', JSON.stringify(history.slice(0, 50)));
-                updateLogDisplay();
+                let logs = JSON.parse(localStorage.getItem('sysLogs') || '[]');
+                logs.unshift(log);
+                localStorage.setItem('sysLogs', JSON.stringify(logs.slice(0, 40)));
+                displayLogs();
             } catch(e) {}
         }
 
-        function updateLogDisplay() {
-            const history = JSON.parse(localStorage.getItem('vLogs') || '[]');
-            document.getElementById('logArea').innerHTML = history.map(h => `
-                <div class="visitor-row">[${h.time}] IP: ${h.ip} | ${h.loc} | DEVICE: ${h.agent}</div>
+        function displayLogs() {
+            const logs = JSON.parse(localStorage.getItem('sysLogs') || '[]');
+            document.getElementById('visitorLogs').innerHTML = logs.map(l => `
+                <div class="visitor-row">[${l.time}] IP: ${l.ip} | ${l.city}, ${l.country} | DEV: ${l.ua}</div>
             `).join('');
         }
-        trackVisitor();
+        runTracker();
 
-        // 4. أوامر الأدمن
-        function sendFakeAlert() { alert("SECURITY_NOTICE: Your connection is being monitored by LOUAY_CORE."); }
-        function forceRedirect() { window.location.href = "https://www.google.com"; }
-        function clearData() { localStorage.removeItem('vLogs'); updateLogDisplay(); }
-
-        // منع الـ Inspect Element
+        // منع القائمة اليمنى
         document.oncontextmenu = () => false;
 
-        // الساعة والـ CPU الوهمي
+        // الساعة الرقمية
         setInterval(() => {
             document.getElementById('clock').innerText = new Date().toLocaleTimeString();
-            document.getElementById('cpuUsage').innerText = Math.floor(Math.random() * 40 + 20) + "%";
         }, 1000);
     </script>
 </body>
