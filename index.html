@@ -18,7 +18,7 @@
         .card h3 { color: var(--blue); margin-bottom: 15px; font-size: 1.5rem; }
         .card p { color: #888; font-size: 0.9rem; line-height: 1.6; }
 
-        /* لوحة التحكم */
+        /* Admin Panel */
         #ghostAdmin {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000;
             z-index: 10000; display: none; padding: 30px; border: 2px solid var(--purple);
@@ -26,13 +26,17 @@
         .visitor-row { background: #080808; padding: 12px; margin-bottom: 8px; border-left: 5px solid var(--blue); font-size: 0.85rem; color: #00ff00; text-align: left; direction: ltr; }
 
         .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 1px solid var(--blue); padding: 12px 25px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--blue); z-index: 999; }
-        
         .btn-ctrl { background: transparent; border: 1px solid var(--blue); color: var(--blue); padding: 10px 20px; cursor: pointer; margin: 5px; font-weight: bold; }
+        
+        .scan-line { width: 100%; height: 2px; background: rgba(0, 243, 255, 0.1); position: fixed; top: 0; z-index: 10001; pointer-events: none; animation: scan 6s linear infinite; }
+        @keyframes scan { from {top: 0} to {top: 100%} }
     </style>
 </head>
-<body onclick="startRadio()">
+<body onclick="startMusic()">
 
-    <audio id="radioStream" crossorigin="anonymous">
+    <div class="scan-line"></div>
+    
+    <audio id="liveRadio" crossorigin="anonymous">
         <source src="https://icecast.walmradio.com:8000/classic" type="audio/mpeg">
     </audio>
 
@@ -45,7 +49,7 @@
 
         <div class="grid">
             <div class="card"><h3>SMM_PROTOCOL</h3><p>أتمتة كاملة لخدمات السوشيال ميديا عبر بروتوكولات API سحابية.</p></div>
-            <div class="card"><h3>CIPHER_PAY</h3><p>بوابات دفع آمنة ومعالجة معاملات Baridimob بتشفير عالي.</p></div>
+            <div class="card"><h3>BINANCE_PAY</h3><p>بوابات دفع آمنة ومعالجة معاملات BinancePay والمحافظ الرقمية بتشفير عالي.</p></div>
             <div class="card"><h3>ROOT_TOOLS</h3><p>تطوير أدوات الأتمتة المخصصة لبيئات Termux.</p></div>
             <div class="card"><h3>MAIL_SYSTEM</h3><p>بوت إنشاء إيميلات دومين خاص، مؤقت أو دائم بشكل آلي تماماً.</p></div>
         </div>
@@ -60,7 +64,7 @@
                 <button onclick="hideAdmin()" style="color: red; background: none; border: none; cursor: pointer;">[ CLOSE ]</button>
             </div>
             <div style="margin: 30px 0;">
-                <button class="btn-ctrl" onclick="alert('System Alert Sent')">SEND_ALERT</button>
+                <button class="btn-ctrl" onclick="alert('Alert Dispatched')">SEND_ALERT</button>
                 <button class="btn-ctrl" onclick="window.location.href='https://google.com'">EJECT_ALL</button>
                 <button class="btn-ctrl" onclick="localStorage.clear(); location.reload();" style="border-color: red; color: red;">WIPE_LOGS</button>
             </div>
@@ -76,26 +80,30 @@
     </div>
 
     <script>
-        const radio = document.getElementById('radioStream');
-        let radioActive = false;
+        const radio = document.getElementById('liveRadio');
+        let radioStarted = false;
 
-        // 1. تشغيل الإذاعة المباشرة (تحتاج لمسة واحدة في أي مكان)
-        function startRadio() {
-            if(!radioActive) {
-                radio.play().then(() => {
-                    radioActive = true;
-                }).catch(e => console.log("Stream waiting..."));
+        function startMusic() {
+            if(!radioStarted) {
+                radio.play().catch(e => console.log("Stream error"));
+                radioStarted = true;
             }
         }
 
-        // 2. نظام الباسورد عند الضغط 4 مرات
+        // توقف الموسيقى في الخلفية
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) radio.pause();
+            else if(radioStarted) radio.play();
+        });
+
+        // دخول الأدمين (4 ضغطات + باسورد)
         let clicks = 0;
         document.getElementById('adminTrigger').onclick = () => {
             clicks++;
             if(clicks >= 4) {
-                let pass = prompt("ENTER ACCESS CODE:");
-                if(pass === "0781262864") showAdmin();
-                else alert("FAILED");
+                let p = prompt("ACCESS CODE:");
+                if(p === "0781262864") showAdmin();
+                else alert("WRONG CODE");
                 clicks = 0;
             }
         };
@@ -103,47 +111,32 @@
         function showAdmin() { document.getElementById('ghostAdmin').style.display = 'block'; }
         function hideAdmin() { document.getElementById('ghostAdmin').style.display = 'none'; }
 
-        // 3. نظام جلب الآيبيهات (حل مشكلة عدم الظهور)
-        async function fetchIP() {
+        // نظام جلب الـ IP (مستقر جداً)
+        async function getIP() {
             try {
-                // استخدام ipify لجلب الـ IP فقط بشكل مستقر
-                const response = await fetch('https://api.ipify.org?format=json');
-                const data = await response.json();
-                const userIp = data.ip;
-                
-                document.getElementById('currentIp').innerText = userIp;
-                
-                // حفظ الـ IP في السجل المحلي
-                const logEntry = {
-                    ip: userIp,
-                    time: new Date().toLocaleString(),
-                    device: navigator.userAgent.includes("Android") ? "Android" : "Other"
-                };
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                const ip = data.ip;
+                document.getElementById('currentIp').innerText = ip;
 
+                const log = { ip: ip, time: new Date().toLocaleString() };
                 let logs = JSON.parse(localStorage.getItem('adminLogs') || '[]');
-                logs.unshift(logEntry);
+                logs.unshift(log);
                 localStorage.setItem('adminLogs', JSON.stringify(logs.slice(0, 50)));
                 renderLogs();
-            } catch(e) {
-                document.getElementById('currentIp').innerText = "FAILED";
-            }
+            } catch(e) { document.getElementById('currentIp').innerText = "ERROR"; }
         }
 
         function renderLogs() {
             const logs = JSON.parse(localStorage.getItem('adminLogs') || '[]');
-            const container = document.getElementById('visitorLogs');
-            container.innerHTML = logs.map(l => `
-                <div class="visitor-row">[${l.time}] > IP: ${l.ip} | DEV: ${l.device}</div>
+            document.getElementById('visitorLogs').innerHTML = logs.map(l => `
+                <div class="visitor-row">[${l.time}] > IP: ${l.ip}</div>
             `).join('');
         }
 
-        // تشغيل الجلب فور الدخول
-        fetchIP();
-
-        // التحديث التلقائي للساعة
-        setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString();
-        }, 1000);
+        getIP();
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
+        document.oncontextmenu = () => false;
     </script>
 </body>
 </html>
