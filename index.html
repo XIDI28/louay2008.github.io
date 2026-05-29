@@ -14,10 +14,12 @@
             --text-dim: #888888;
         }
 
+        /* منع التحديد الأزرق المزعج */
         * { 
             box-sizing: border-box; 
             margin: 0; padding: 0; 
             -webkit-tap-highlight-color: transparent; 
+            outline: none;
         }
 
         body {
@@ -27,7 +29,7 @@
             overflow-x: hidden;
             background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, transparent 100%);
             user-select: none;
-            padding-bottom: 80px;
+            padding-bottom: 100px;
         }
 
         .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; text-align: center; }
@@ -41,7 +43,6 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
             font-weight: 900;
-            text-transform: uppercase;
         }
 
         .status-bar {
@@ -53,13 +54,6 @@
             color: var(--accent-color);
             margin-bottom: 20px;
             box-shadow: 0 0 10px var(--accent-color);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
         }
 
         .projects-grid {
@@ -77,7 +71,6 @@
             transition: 0.4s;
             text-align: right;
             position: relative;
-            overflow: hidden;
         }
 
         .card:hover { 
@@ -89,120 +82,103 @@
         .card h3 { color: #fff; margin-bottom: 12px; font-size: 1.4rem; }
         .card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.5; }
 
-        .tag { 
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--accent-color); 
-            font-size: 0.7rem; 
-            padding: 3px 8px; 
-            border-radius: 4px;
-            border: 1px solid var(--accent-color);
-        }
+        .tag { color: var(--accent-color); font-size: 0.7rem; text-transform: uppercase; border: 1px solid; padding: 2px 5px; border-radius: 3px; }
 
         footer { margin-top: 50px; padding: 20px; }
         .contact-btn {
             display: inline-block;
             padding: 16px 40px;
-            background: linear-gradient(45deg, var(--accent-color), var(--neon-purple));
-            color: #000;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
             text-decoration: none;
             font-weight: bold;
             border-radius: 8px;
             transition: 0.3s;
-            text-transform: uppercase;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            background: rgba(0, 212, 255, 0.05);
         }
 
-        .contact-btn:hover { transform: scale(1.05); box-shadow: 0 0 40px var(--accent-color); }
+        .contact-btn:hover { background: var(--accent-color); color: #000; box-shadow: 0 0 30px var(--accent-color); }
 
+        /* شريط المعلومات السفلي (مصلح لعدم التداخل) */
         .info-panel {
             position: fixed;
             bottom: 0; left: 0; right: 0;
             font-family: monospace;
             color: var(--accent-color);
-            font-size: 0.8rem;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 12px 25px;
+            font-size: 0.75rem;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 12px 20px;
             border-top: 1px solid var(--accent-color);
             display: flex;
             justify-content: space-between;
-            z-index: 1000;
+            z-index: 9999;
         }
 
-        /* رسالة تذكير بالضغط لتشغيل الصوت */
-        #audio-hint {
+        /* تنبيه الضغط لتشغيل الصوت */
+        #tap-hint {
             position: fixed;
-            top: 20px;
-            left: 50%;
+            top: 20px; left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 212, 255, 0.9);
+            background: var(--accent-color);
             color: #000;
-            padding: 8px 20px;
+            padding: 10px 20px;
             border-radius: 5px;
-            font-size: 0.9rem;
             font-weight: bold;
-            z-index: 2000;
+            z-index: 10000;
             pointer-events: none;
+            animation: pulse 1.5s infinite;
         }
+        @keyframes pulse { 0% {opacity: 1} 50% {opacity: 0.5} 100% {opacity: 1} }
     </style>
 </head>
 <body onclick="startExperience()">
 
-    <div id="audio-hint">إضغط في أي مكان لتفعيل الصوت ⚡</div>
+    <div id="tap-hint">إضغط في أي مكان لتفعيل موسيقى الفونك ⚡</div>
 
-    <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/audio/2023/05/08/audio_82c3f8f108.mp3" type="audio/mpeg">
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://cdn.pixabay.com/audio/2023/10/01/audio_0989d38101.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
         <header>
-            <div id="welcome-msg" class="status-bar">LOUAY_SYSTEMS_ACTIVE</div>
+            <div id="welcome-msg" class="status-bar">SYSTEM_ONLINE</div>
             <h1>LOUAY</h1>
-            <p style="color: #666; margin-top: 10px; letter-spacing: 2px;">CYBERNETIC AUTOMATION & SMM EXPERT</p>
+            <p style="color: #666; margin-top: 10px; letter-spacing: 2px;">Advanced Cyber Systems & Automation</p>
         </header>
 
         <div class="projects-grid">
             <div class="card">
                 <h3>SMM بوت تلغرام</h3>
-                <p>نظام دفع وتزويد تلقائي عبر API متصل بأقوى السيرفرات العالمية.</p>
+                <p>نظام دفع وتزويد تلقائي عبر API متطور يدعم جميع المنصات.</p>
                 <span class="tag">Active</span>
             </div>
             <div class="card">
                 <h3>بوابات دفع DZ</h3>
-                <p>ربط تلقائي مع Baridimob وChargily لتسهيل التجارة في الجزائر.</p>
+                <p>ربط تلقائي لعمليات الدفع عبر بريدي موب وتشارجلي.</p>
                 <span class="tag">Secure</span>
             </div>
             <div class="card">
                 <h3>Termux Scripts</h3>
-                <p>سكريبتات بايثون متقدمة للأتمتة وفحص المواقع واستخراج البيانات.</p>
-                <span class="tag">Tools</span>
-            </div>
-            <div class="card">
-                <h3>خدمات السوشيال ميديا</h3>
-                <p>تزويد متابعين، لايكات، ومشاهدات بجودة عالية وسرعة فائقة.</p>
-                <span class="tag">SMM Pro</span>
-            </div>
-            <div class="card">
-                <h3>شحن جواهر الألعاب</h3>
-                <p>شحن فوري ومضمون لـ Free Fire و PUBG عبر المعرف (ID).</p>
-                <span class="tag">Gaming</span>
+                <p>سكريبتات احترافية بلغة بايثون لأتمتة المهام الصعبة.</p>
+                <span class="tag">Developer</span>
             </div>
             <div class="card">
                 <h3>Reverse Engineering</h3>
-                <p>تحليل الأكواد، تشفير الملفات، وتطوير أنظمة الحماية المتقدمة.</p>
+                <p>تفكيك البرمجيات وتطوير أنظمة الحماية والتشفير المتقدمة.</p>
                 <span class="tag">Expert</span>
             </div>
         </div>
 
         <footer>
             <a href="https://t.me/VJF_X" class="contact-btn">اتصل بي عبر تلغرام</a>
-            <p style="margin-top: 20px; font-size: 0.7rem; color: #333;">&copy; 2026 CORE LOGIC | BY LOUAY</p>
+            <p style="margin-top: 20px; font-size: 0.7rem; color: #333;">&copy; 2026 LOUAY CORE | Ain Beida Node</p>
         </footer>
     </div>
 
     <div class="info-panel">
         <div>TIME: <span id="clock">00:00:00</span></div>
+        <div>LOC: <span id="user-country">DZ</span></div>
         <div>IP: <span id="user-ip">DETECTING...</span></div>
-        <div>NODE: <span id="user-country">DZ</span></div>
     </div>
 
     <script>
@@ -226,16 +202,16 @@
 
         function startExperience() {
             const audio = document.getElementById('bgMusic');
-            audio.play();
-            // إخفاء رسالة التنبيه بعد الضغط
-            document.getElementById('audio-hint').style.display = 'none';
+            audio.play().then(() => {
+                document.getElementById('tap-hint').style.display = 'none';
+            }).catch(e => console.log("Audio play failed"));
             document.body.onclick = null;
         }
 
         document.addEventListener("visibilitychange", function() {
             const audio = document.getElementById('bgMusic');
             if (document.hidden) audio.pause();
-            else audio.play();
+            else if (!document.getElementById('tap-hint').style.display === 'none') audio.play();
         });
     </script>
 </body>
