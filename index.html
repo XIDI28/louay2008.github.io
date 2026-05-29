@@ -3,124 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOUAY CORE</title>
+    <title>LOUAY | NEURAL NODE</title>
     <style>
-        :root { --blue: #00f3ff; --purple: #bc13fe; --bg: #010103; }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Consolas', monospace; }
-        body { background: var(--bg); color: white; overflow-x: hidden; user-select: none; cursor: crosshair; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; text-align: center; }
-        .glitch-title { font-size: 4rem; color: var(--blue); text-shadow: 3px 3px var(--purple); letter-spacing: 15px; font-weight: 900; cursor: pointer; }
-        
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 60px; }
-        .card { background: rgba(10, 10, 25, 0.9); border: 1px solid rgba(0, 243, 255, 0.1); padding: 35px; border-radius: 2px; transition: 0.3s; }
-        .card:hover { border-color: var(--blue); transform: translateY(-5px); box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
-        .card h3 { color: var(--blue); margin-bottom: 15px; font-size: 1.5rem; }
-        .card p { color: #888; font-size: 0.9rem; line-height: 1.6; }
+        :root { --blue: #00f3ff; --purple: #bc13fe; --bg: #020205; --card-bg: rgba(10, 10, 20, 0.8); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', Courier, monospace; }
+        body { background: var(--bg); color: white; overflow-x: hidden; user-select: none; }
 
-        /* لوحة التحكم */
-        #ghostAdmin { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: none; padding: 30px; border: 2px solid var(--purple); }
-        .visitor-row { background: #080808; padding: 12px; margin-bottom: 8px; border-left: 5px solid var(--blue); font-size: 0.85rem; color: #00ff00; text-align: left; direction: ltr; }
+        /* خلفية متحركة خفيفة */
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 50%, rgba(0, 243, 255, 0.05) 0%, transparent 80%); pointer-events: none; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 80px 20px; position: relative; z-index: 2; }
         
-        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 1px solid var(--blue); padding: 12px 25px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--blue); z-index: 999; }
-        .btn-ctrl { background: transparent; border: 1px solid var(--blue); color: var(--blue); padding: 10px 20px; cursor: pointer; margin: 5px; font-weight: bold; }
-        
-        .scan-line { width: 100%; height: 2px; background: rgba(0, 243, 255, 0.1); position: fixed; top: 0; z-index: 10001; pointer-events: none; animation: scan 6s linear infinite; }
-        @keyframes scan { from {top: 0} to {top: 100%} }
+        /* هيدر احترافي */
+        header { margin-bottom: 80px; text-align: center; }
+        .glitch-title { font-size: clamp(3rem, 10vw, 5rem); color: var(--blue); text-transform: uppercase; letter-spacing: 10px; font-weight: 900; cursor: pointer; text-shadow: 0 0 20px rgba(0, 243, 255, 0.5); }
+        .subtitle { color: #555; font-size: 0.9rem; letter-spacing: 4px; margin-top: 10px; }
+
+        /* نظام الـ Visualizer للموسيقى */
+        .audio-status { display: flex; justify-content: center; gap: 3px; margin-top: 20px; height: 20px; align-items: flex-end; }
+        .bar { width: 3px; background: var(--blue); animation: bounce 1s ease-in-out infinite; display: none; }
+        @keyframes bounce { 0%, 100% { height: 5px; } 50% { height: 20px; } }
+
+        /* الكروت الاحترافية */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); border: 1px solid rgba(0, 243, 255, 0.1); padding: 30px; backdrop-filter: blur(10px); transition: 0.4s; position: relative; border-radius: 4px; }
+        .card:hover { border-color: var(--blue); transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0, 243, 255, 0.1); }
+        .card h3 { color: var(--blue); font-size: 1.2rem; margin-bottom: 15px; border-bottom: 1px solid rgba(0, 243, 255, 0.2); padding-bottom: 10px; }
+        .card p { color: #aaa; font-size: 0.85rem; line-height: 1.6; }
+
+        /* التيرمينال الجديد (بدل المودال) */
+        #adminTerminal {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+            width: 90%; max-width: 800px; height: 500px; background: #000; border: 1px solid var(--blue);
+            z-index: 1000; display: none; flex-direction: column; box-shadow: 0 0 50px #000;
+        }
+        .term-header { background: #111; padding: 10px 20px; display: flex; justify-content: space-between; border-bottom: 1px solid #222; }
+        .term-body { flex: 1; padding: 20px; overflow-y: auto; color: #0f0; font-size: 0.8rem; text-align: left; direction: ltr; }
+        .term-input { background: none; border: none; color: #0f0; outline: none; width: 100%; font-family: monospace; }
+
+        .btn-link { display: inline-block; margin-top: 50px; padding: 15px 40px; border: 1px solid var(--blue); color: var(--blue); text-decoration: none; font-weight: bold; transition: 0.3s; background: rgba(0, 243, 255, 0.05); }
+        .btn-link:hover { background: var(--blue); color: #000; box-shadow: 0 0 20px var(--blue); }
+
+        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: rgba(0,0,0,0.9); padding: 10px 20px; display: flex; justify-content: space-between; font-size: 0.7rem; color: #444; border-top: 1px solid #111; z-index: 100; }
     </style>
 </head>
-<body onclick="startAudio()">
+<body onclick="initAudio()">
 
-    <div class="scan-line"></div>
-    
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <audio id="bgAudio" loop>
+        <source src="https://stream.zeno.fm/f96at866380uv" type="audio/mpeg">
     </audio>
 
     <div class="container">
         <header>
             <h1 class="glitch-title" id="adminTrigger">LOUAY</h1>
-            <p style="color: #444; margin-top: 15px; letter-spacing: 5px; text-transform: uppercase;">NEURAL ARCHITECT</p>
+            <p class="subtitle">NEURAL INTERFACE // ARCHITECT</p>
+            <div class="audio-status" id="viz">
+                <div class="bar" style="animation-delay: 0.1s"></div>
+                <div class="bar" style="animation-delay: 0.3s"></div>
+                <div class="bar" style="animation-delay: 0.2s"></div>
+                <div class="bar" style="animation-delay: 0.4s"></div>
+            </div>
         </header>
 
         <div class="grid">
-            <div class="card"><h3>SMM_PROTOCOL</h3><p>أتمتة كاملة لخدمات السوشيال ميديا عبر بروتوكولات API سحابية.</p></div>
-            <div class="card"><h3>BINANCE_PAY</h3><p>بوابات دفع آمنة ومعالجة معاملات BinancePay والمحافظ الرقمية.</p></div>
-            <div class="card"><h3>ROOT_TOOLS</h3><p>تطوير أدوات الأتمتة المخصصة لبيئات Termux.</p></div>
-            <div class="card"><h3>MAIL_SYSTEM</h3><p>بوت إنشاء إيميلات دومين خاص بشكل آلي تماماً.</p></div>
+            <div class="card"><h3>SMM_PROTOCOL</h3><p>أتمتة كاملة لخدمات زيادة المتابعين والتفاعل عبر بروتوكولات API سحابية مشفرة.</p></div>
+            <div class="card"><h3>BINANCE_PAY</h3><p>دمج بوابات الدفع الرقمي ومعالجة طلبات USDT عبر شبكات الـ Blockchain.</p></div>
+            <div class="card"><h3>ROOT_TOOLS</h3><p>تطوير سكريبتات متقدمة لبيئة Termux متوافقة مع أنظمة Linux و Android.</p></div>
+            <div class="card"><h3>MAIL_SYSTEM</h3><p>نظام توليد حسابات البريد المؤقتة لتجاوز أنظمة التحقق العالمية.</p></div>
         </div>
-        
-        <a href="https://t.me/VJF_X" style="display:inline-block; margin-top: 60px; color: var(--blue); text-decoration: none; border: 1px solid; padding: 15px 40px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase;">CONTACT ME</a>
+
+        <div style="text-align: center;">
+            <a href="https://t.me/VJF_X" class="btn-link">ESTABLISH CONNECTION</a>
+        </div>
     </div>
 
-    <div id="ghostAdmin">
-        <div style="max-width: 900px; margin: 0 auto;">
-            <div style="display: flex; justify-content: space-between;">
-                <h2 style="color: var(--purple);">ADMIN TERMINAL</h2>
-                <button onclick="hideAdmin()" style="color: red; background: none; border: none; cursor: pointer;">[ CLOSE ]</button>
-            </div>
-            <div style="margin: 30px 0;">
-                <button class="btn-ctrl" onclick="alert('Sent!')">SEND_ALERT</button>
-                <button class="btn-ctrl" onclick="window.location.href='https://google.com'">EJECT_ALL</button>
-                <button class="btn-ctrl" onclick="localStorage.clear(); location.reload();" style="border-color: red; color: red;">WIPE_LOGS</button>
-            </div>
-            <div id="visitorLogs" style="height: 55vh; overflow-y: auto; background: #050505; padding: 15px; border: 1px solid #111;"></div>
+    <div id="adminTerminal">
+        <div class="term-header">
+            <span style="color: var(--blue);">ROOT@LOUAY_SERVER:~#</span>
+            <span onclick="closeTerm()" style="color: red; cursor: pointer;">[X]</span>
+        </div>
+        <div class="term-body" id="logs">
+            <div>[INFO] System initialized...</div>
+            <div>[INFO] Awaiting commands...</div>
+            <div id="dynamicLogs"></div>
+        </div>
+        <div style="padding: 10px; border-top: 1px solid #222; display: flex; gap: 10px;">
+            <button onclick="clearLogs()" style="background: none; border: 1px solid #333; color: #555; padding: 5px 10px; cursor: pointer;">CLEAR</button>
+            <button onclick="window.location.href='https://google.com'" style="background: none; border: 1px solid red; color: red; padding: 5px 10px; cursor: pointer;">EJECT_ALL</button>
         </div>
     </div>
 
     <div class="bottom-bar">
-        <div>CORE: <span style="color: #0f0;">ONLINE</span></div>
+        <div id="ipDisp">IP: FETCHING...</div>
         <div id="clock">00:00:00</div>
-        <div>IP_MONITOR: <span id="currentIp" style="color: #0f0;">DETECTING...</span></div>
+        <div>SECURE_MODE: ON</div>
     </div>
 
     <script>
-        const music = document.getElementById('bgMusic');
-        let playing = false;
+        const audio = document.getElementById('bgAudio');
+        let audioStarted = false;
 
-        // دالة تشغيل الصوت القهري
-        function startAudio() {
-            if(!playing) {
-                music.play().then(() => {
-                    playing = true;
-                }).catch(e => console.log("Click again to play"));
+        function initAudio() {
+            if(!audioStarted) {
+                audio.play().then(() => {
+                    audioStarted = true;
+                    document.querySelectorAll('.bar').forEach(b => b.style.display = 'block');
+                });
             }
         }
 
-        // أدمين بانل (4 ضغطات)
+        // دخول الأدمين (4 ضغطات)
         let count = 0;
         document.getElementById('adminTrigger').onclick = (e) => {
-            e.stopPropagation(); // باش ما يخدمش الصوت كي تفتح الأدمين
+            e.stopPropagation();
             count++;
             if(count >= 4) {
-                let pass = prompt("ENTER KEY:");
-                if(pass === "0781262864") showAdmin();
-                else alert("FAILED");
+                let pass = prompt("ENCRYPTED_KEY:");
+                if(pass === "0781262864") openTerm();
+                else alert("UNAUTHORIZED");
                 count = 0;
             }
         };
 
-        function showAdmin() { document.getElementById('ghostAdmin').style.display = 'block'; }
-        function hideAdmin() { document.getElementById('ghostAdmin').style.display = 'none'; }
+        function openTerm() { 
+            document.getElementById('adminTerminal').style.display = 'flex';
+            renderLogs();
+        }
+        function closeTerm() { document.getElementById('adminTerminal').style.display = 'none'; }
 
-        // نظام الآي بي والوقت
-        async function getIP() {
+        async function fetchNet() {
             try {
-                const r = await fetch('https://api.ipify.org?format=json');
-                const d = await r.json();
-                document.getElementById('currentIp').innerText = d.ip;
-                let logs = JSON.parse(localStorage.getItem('adminLogs') || '[]');
-                logs.unshift({ ip: d.ip, time: new Date().toLocaleString() });
-                localStorage.setItem('adminLogs', JSON.stringify(logs.slice(0, 50)));
-                renderLogs();
-            } catch(e) { document.getElementById('currentIp').innerText = "ERROR"; }
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                document.getElementById('ipDisp').innerText = "IP: " + data.ip;
+                
+                let logs = JSON.parse(localStorage.getItem('sysLogs') || '[]');
+                logs.unshift({ip: data.ip, time: new Date().toLocaleString()});
+                localStorage.setItem('sysLogs', JSON.stringify(logs.slice(0, 30)));
+            } catch(e) { document.getElementById('ipDisp').innerText = "IP: OFFLINE"; }
         }
 
         function renderLogs() {
-            const logs = JSON.parse(localStorage.getItem('adminLogs') || '[]');
-            document.getElementById('visitorLogs').innerHTML = logs.map(l => `<div class="visitor-row">[${l.time}] > IP: ${l.ip}</div>`).join('');
+            const logs = JSON.parse(localStorage.getItem('sysLogs') || '[]');
+            document.getElementById('dynamicLogs').innerHTML = logs.map(l => 
+                `<div style="margin-bottom: 5px;"><span style="color: #555;">[${l.time}]</span> <span style="color: var(--blue);">LOGIN_DETECTED:</span> ${l.ip}</div>`
+            ).join('');
         }
 
-        getIP();
+        function clearLogs() {
+            localStorage.removeItem('sysLogs');
+            renderLogs();
+        }
+
+        fetchNet();
         setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
         document.oncontextmenu = () => false;
     </script>
