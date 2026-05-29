@@ -3,132 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOUAY | HUB</title>
+    <title>LOUAY CORE | TERMINAL</title>
     <style>
-        :root { --blue: #00f3ff; --yellow: #ffeb3b; --bg: #010103; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Consolas', monospace; }
+        :root { --blue: #00f3ff; --purple: #bc13fe; --bg: #010103; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Consolas', monospace; }
         body { background: var(--bg); color: white; overflow-x: hidden; user-select: none; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; text-align: center; position: relative; z-index: 10; }
-        .main-title { font-size: clamp(3.5rem, 15vw, 6rem); color: var(--blue); letter-spacing: 15px; font-weight: 900; cursor: pointer; text-shadow: 0 0 20px rgba(0, 243, 255, 0.5); }
 
-        /* زر الموسيقى الأصفر */
-        .music-trigger-container { margin: 30px 0; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .play-btn { 
-            width: 70px; height: 70px; background: var(--yellow); border: none; border-radius: 50%; 
-            cursor: pointer; box-shadow: 0 0 25px var(--yellow); display: flex; align-items: center; 
-            justify-content: center; transition: 0.3s;
-        }
-        .play-btn:active { transform: scale(0.9); }
-        .play-btn svg { fill: black; width: 35px; height: 35px; }
-        .btn-hint { color: var(--yellow); font-size: 1rem; font-weight: bold; letter-spacing: 2px; }
+        /* سكريبت المسح البصري */
+        .scan-line { width: 100%; height: 2px; background: rgba(0, 243, 255, 0.1); position: fixed; top: 0; z-index: 10001; pointer-events: none; animation: scan 6s linear infinite; }
+        @keyframes scan { from {top: 0} to {top: 100%} }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 40px; }
-        .card { background: rgba(5, 5, 15, 0.95); border: 1px solid rgba(0, 243, 255, 0.1); padding: 30px; text-align: right; border-radius: 5px; }
-        .card h3 { color: var(--blue); margin-bottom: 15px; border-left: 3px solid var(--blue); padding-left: 10px; }
-        .card p { color: #666; font-size: 0.85rem; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; text-align: center; }
+        .glitch-title { font-size: 4rem; color: var(--blue); text-shadow: 3px 3px var(--purple); letter-spacing: 15px; font-weight: 900; cursor: pointer; }
 
-        #ghostAdmin { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 95%; max-width: 800px; height: 500px; background: #000; border: 2px solid #bc13fe; z-index: 1000; display: none; flex-direction: column; }
-        .term-header { background: #0a0a0a; padding: 15px; display: flex; justify-content: space-between; color: #bc13fe; font-weight: bold; }
-        .term-body { flex: 1; padding: 20px; overflow-y: auto; color: #00ff41; font-size: 0.8rem; text-align: left; direction: ltr; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 60px; }
+        .card { background: rgba(10, 10, 25, 0.9); border: 1px solid rgba(0, 243, 255, 0.1); padding: 35px; border-radius: 2px; transition: 0.3s; position: relative; overflow: hidden; }
+        .card:hover { border-color: var(--blue); transform: translateY(-5px); box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
+        .card h3 { color: var(--blue); margin-bottom: 15px; font-size: 1.5rem; }
+        .card p { color: #888; font-size: 0.9rem; line-height: 1.6; }
 
-        .footer-bar { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 1px solid #111; padding: 10px 25px; display: flex; justify-content: space-between; font-size: 0.7rem; color: #444; }
+        /* لوحة التحكم السرية */
+        #ghostAdmin { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; display: none; padding: 30px; border: 2px solid var(--purple); }
+        .visitor-row { background: #080808; padding: 12px; margin-bottom: 8px; border-left: 5px solid var(--blue); font-size: 0.85rem; color: #00ff00; text-align: left; direction: ltr; }
+
+        .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 1px solid var(--blue); padding: 12px 25px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--blue); z-index: 999; }
+        .btn-ctrl { background: transparent; border: 1px solid var(--blue); color: var(--blue); padding: 10px 20px; cursor: pointer; margin: 5px; font-weight: bold; }
     </style>
 </head>
-<body>
+<body onclick="playMusic()" ontouchstart="playMusic()">
 
-    <audio id="hasniAudio" loop>
+    <div class="scan-line"></div>
+
+    <audio id="mainAudio" loop preload="auto">
         <source src="https://stream.zeno.fm/f96at866380uv" type="audio/mpeg">
     </audio>
 
     <div class="container">
         <header>
-            <p style="color: #bc13fe; letter-spacing: 5px; font-size: 0.7rem;">ENCRYPTED CONNECTION</p>
-            <h1 class="main-title" id="adminTrigger">LOUAY</h1>
+            <h1 class="glitch-title" id="adminTrigger">LOUAY</h1>
+            <p style="color: #444; margin-top: 15px; letter-spacing: 5px; text-transform: uppercase;">NEURAL ARCHITECT</p>
         </header>
 
-        <div class="music-trigger-container">
-            <button class="play-btn" onclick="toggleMusic()">
-                <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </button>
-            <span class="btn-hint">اضغط على الزر</span>
-        </div>
-
         <div class="grid">
-            <div class="card"><h3>SMM_PROTOCOL</h3><p>أتمتة متكاملة لخدمات التواصل الاجتماعي عبر بروتوكولات API سريعة جداً.</p></div>
-            <div class="card"><h3>BINANCE_PAY</h3><p>معالجة المدفوعات الرقمية وتأكيد المعاملات آلياً عبر الـ Blockchain.</p></div>
-            <div class="card"><h3>ROOT_TOOLS</h3><p>تطوير أدوات تحكم لبيئة Termux وسكريبتات أتمتة المهام.</p></div>
-            <div class="card"><h3>MAIL_SYSTEM</h3><p>توليد حسابات بريد عشوائية لتجاوز أنظمة التحقق الأمنية.</p></div>
+            <div class="card">
+                <h3>SMM_PROTOCOL</h3>
+                <p>أتمتة كاملة لخدمات السوشيال ميديا عبر بروتوكولات API سحابية متطورة.</p>
+            </div>
+            <div class="card">
+                <h3>BINANCE_PAY</h3>
+                <p>معالجة معاملات BinancePay والمحافظ الرقمية بتشفير عالي المستوى.</p>
+            </div>
+            <div class="card">
+                <h3>ROOT_TOOLS</h3>
+                <p>تطوير أدوات الأتمتة المخصصة لبيئات Termux والأنظمة الذكية.</p>
+            </div>
+            <div class="card">
+                <h3>MAIL_SYSTEM</h3>
+                <p>بوت إنشاء إيميلات دومين خاص بشكل آلي تماماً لتجاوز التحققات.</p>
+            </div>
         </div>
-
-        <a href="https://t.me/VJF_X" style="display:inline-block; margin-top:40px; color:var(--blue); text-decoration:none; border:1px solid; padding:12px 30px;">ESTABLISH TELEGRAM LINK</a>
+        
+        <a href="https://t.me/VJF_X" style="display:inline-block; margin-top: 60px; color: var(--blue); text-decoration: none; border: 1px solid; padding: 15px 40px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase;">CONTACT ME</a>
     </div>
 
     <div id="ghostAdmin">
-        <div class="term-header"><span>[ ADMIN TERMINAL ]</span><span onclick="closeAdmin()" style="color:red; cursor:pointer;">[ CLOSE ]</span></div>
-        <div class="term-body" id="logContent"></div>
+        <div style="max-width: 900px; margin: 0 auto;">
+            <div style="display: flex; justify-content: space-between;">
+                <h2 style="color: var(--purple);">ADMIN_TERMINAL_V1</h2>
+                <button onclick="hideAdmin()" style="color: red; background: none; border: none; cursor: pointer;">[ EXIT ]</button>
+            </div>
+            <div style="margin: 30px 0;">
+                <button class="btn-ctrl" onclick="alert('Broadcasting Alert to all Nodes...')">SEND_ALERT</button>
+                <button class="btn-ctrl" onclick="window.location.href='https://google.com'">EJECT_ALL</button>
+                <button class="btn-ctrl" onclick="localStorage.clear(); location.reload();" style="border-color: red; color: red;">WIPE_LOGS</button>
+            </div>
+            <div id="visitorLogs" style="height: 55vh; overflow-y: auto; background: #050505; padding: 15px; border: 1px solid #111;"></div>
+        </div>
     </div>
 
-    <div class="footer-bar">
-        <div id="ipDisp">IP: FETCHING...</div>
+    <div class="bottom-bar">
+        <div>CORE: <span style="color: #0f0;">ONLINE</span></div>
         <div id="clock">00:00:00</div>
-        <div>SECURE_MODE: ON</div>
+        <div>IP_MONITOR: <span id="currentIp" style="color: #0f0;">DETECTING...</span></div>
     </div>
 
     <script>
-        const audio = document.getElementById('hasniAudio');
-        let isPlaying = false;
+        const audio = document.getElementById('mainAudio');
+        let audioRunning = false;
 
-        function toggleMusic() {
-            if (!isPlaying) {
+        // تشغيل الموسيقى فور لمس الشاشة
+        function playMusic() {
+            if(!audioRunning) {
                 audio.play().then(() => {
-                    isPlaying = true;
-                    document.querySelector('.btn-hint').innerText = "AUDIO: ON";
-                    document.getElementById('playIcon').innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-                    document.querySelector('.play-btn').style.background = "#00ff41";
-                    document.querySelector('.play-btn').style.boxShadow = "0 0 30px #00ff41";
-                }).catch(err => alert("يرجى المحاولة مرة أخرى"));
-            } else {
-                audio.pause();
-                isPlaying = false;
-                document.querySelector('.btn-hint').innerText = "AUDIO: OFF";
-                document.getElementById('playIcon').innerHTML = '<path d="M8 5v14l11-7z"/>';
-                document.querySelector('.play-btn').style.background = "#ffeb3b";
+                    audioRunning = true;
+                }).catch(err => console.log("User must click to play audio"));
             }
         }
 
-        // الأدمين
-        let clicks = 0;
-        document.getElementById('adminTrigger').onclick = () => {
-            clicks++;
-            if(clicks >= 4) {
-                if(prompt("ENTER KEY:") === "0781262864") {
-                    document.getElementById('ghostAdmin').style.display = 'flex';
-                    renderLogs();
-                }
-                clicks = 0;
+        // دخول الأدمين (4 ضغطات على الاسم)
+        let adminClicks = 0;
+        document.getElementById('adminTrigger').onclick = (e) => {
+            adminClicks++;
+            if(adminClicks >= 4) {
+                let pass = prompt("ACCESS_KEY:");
+                if(pass === "0781262864") showAdmin();
+                else alert("UNAUTHORIZED_ACCESS");
+                adminClicks = 0;
             }
         };
 
-        function closeAdmin() { document.getElementById('ghostAdmin').style.display = 'none'; }
+        function showAdmin() { document.getElementById('ghostAdmin').style.display = 'block'; }
+        function hideAdmin() { document.getElementById('ghostAdmin').style.display = 'none'; }
 
-        async function getIP() {
+        // نظام تتبع الآي بي
+        async function fetchIP() {
             try {
                 const res = await fetch('https://api.ipify.org?format=json');
                 const data = await res.json();
-                document.getElementById('ipDisp').innerText = "IP: " + data.ip;
-                let logs = JSON.parse(localStorage.getItem('vLogs') || '[]');
-                logs.unshift({ip: data.ip, time: new Date().toLocaleString()});
-                localStorage.setItem('vLogs', JSON.stringify(logs.slice(0, 20)));
-            } catch(e) {}
+                const ip = data.ip;
+                document.getElementById('currentIp').innerText = ip;
+
+                const visit = { ip: ip, time: new Date().toLocaleString() };
+                let logs = JSON.parse(localStorage.getItem('adminLogs') || '[]');
+                logs.unshift(visit);
+                localStorage.setItem('adminLogs', JSON.stringify(logs.slice(0, 50)));
+                updateLogsDisplay();
+            } catch(e) { document.getElementById('currentIp').innerText = "ERROR"; }
         }
 
-        function renderLogs() {
-            const logs = JSON.parse(localStorage.getItem('vLogs') || '[]');
-            document.getElementById('logContent').innerHTML = logs.map(l => `<div>[${l.time}] > IP: ${l.ip}</div>`).join('');
+        function updateLogsDisplay() {
+            const logs = JSON.parse(localStorage.getItem('adminLogs') || '[]');
+            document.getElementById('visitorLogs').innerHTML = logs.map(l => `
+                <div class="visitor-row">[${l.time}] > NODE_DETECTED: ${l.ip}</div>
+            `).join('');
         }
 
-        getIP();
+        fetchIP();
         setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
+        document.oncontextmenu = () => false; // منع الكليك يمين
     </script>
 </body>
 </html>
