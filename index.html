@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOUAY | Future Systems 2026</title>
+    <style>
+        :root {
+            --bg-color: #050505;
+            --card-bg: #0d0d0d;
+            --accent-color: #00d4ff;
+            --neon-purple: #9d00ff;
+            --text-main: #e0e0e0;
+            --text-dim: #888888;
+            --border-glow: rgba(0, 212, 255, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 50%, #1a1a1a 0%, transparent 100%),
+                linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 30px 30px, 30px 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Futuristic Header */
+        header {
+            text-align: center;
+            padding: 60px 0;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 4rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--accent-color), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        .status-bar {
+            display: inline-block;
+            padding: 5px 15px;
+            border: 1px solid var(--accent-color);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: var(--accent-color);
+            box-shadow: 0 0 10px var(--border-glow);
+            margin-bottom: 20px;
+        }
+
+        .bio {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #1a1a1a;
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            transform: translateX(-100%);
+            transition: 0.5s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px var(--border-glow);
+        }
+
+        .card:hover::before {
+            transform: translateX(100%);
+        }
+
+        .card h3 {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h3::before {
+            content: ">>";
+            color: var(--accent-color);
+            font-family: monospace;
+        }
+
+        .card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: 5px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        /* Visual Element for 2026 Vibes */
+        .vibe-2026 {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--accent-color);
+            opacity: 0.4;
+            pointer-events: none;
+            text-align: right;
+        }
+
+        footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #1a1a1a;
+            color: var(--text-dim);
+        }
+
+        .contact-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .contact-btn:hover {
+            background: var(--accent-color);
+            color: #000;
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 2.5rem; }
+            .container { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="status-bar">SYSTEM ONLINE // SECURED ACCESS</div>
+            <h1>LOUAY</h1>
+            <p class="bio">خبير في الأنظمة المتقدمة وأتمتة المهام. مطور حلول رقمية بلمسة المستقبل. كل الأكواد محمية ومخصصة للأداء العالي.</p>
+        </header>
+
+        <div class="projects-grid">
+            <div class="card">
+                <div>
+                    <span class="tag">System</span>
+                    <h3>بوت تلغرام دفع تلقائي SMM</h3>
+                    <p>نظام متكامل يدير عمليات الدفع واستلام الطلبات بشكل لحظي. مرتبط بأقوى مزودي الخدمات لضمان السرعة والدقة.</p>
+                </div>
+                <div class="tag">Private Logic</div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <span class="tag">Financial</span>
+                    <h3>سكريبتات دفع جميع المحافظ</h3>
+                    <p>هندسة برمجية تدعم بوابات الدفع الإلكتروني لأكثر المحافظ استخداماً. مجهز بنظام حماية عالي ضد التلاعب.</p>
+                </div>
+                <div class="tag">Encrypted</div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <span class="tag">Web</span>
+                    <h3>موقع شحن ألعاب وحسابات</h3>
+                    <p>منصة تجارة إلكترونية متطورة مخصصة للاعبين، توفر واجهة مستخدم سلسة ونظام معالجة طلبات أوتوماتيكي.</p>
+                </div>
+                <div class="tag">Live System</div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <span class="tag">Mail System</span>
+                    <h3>بوت إنشاء إيميلات دومين خاص</h3>
+                    <p>أداة تتيح إنشاء بريد إلكتروني مؤقت أو دائم على دومينات خاصة بشكل آلي ومحمي تماماً من السبام.</p>
+                </div>
+                <div class="tag">Automated</div>
+            </div>
+        </div>
+
+        <footer>
+            <p>تواصل مع المطور لتفاصيل أكثر</p>
+            <a href="https://t.me/YourTelegramUsername" class="contact-btn">Telegram Contact</a>
+            <p style="margin-top: 20px; font-size: 0.7rem;">&copy; LOUAY_SYSTEMS_CORE_2026</p>
+        </footer>
+    </div>
+
+    <div class="vibe-2026">
+        CORE_LOADED: 100%<br>
+        LOCATION: DZ_NODE<br>
+        LEVEL: ADVANCED
+    </div>
+
+</body>
+</html>
