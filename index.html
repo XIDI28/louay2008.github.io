@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOUAY | Core Systems 2026</title>
+    <title>LOUAY | Global Systems 2026</title>
     <style>
         :root {
             --bg-color: #050505;
@@ -18,7 +18,6 @@
             box-sizing: border-box; 
             margin: 0; padding: 0; 
             -webkit-tap-highlight-color: transparent; 
-            outline: none;
         }
 
         body {
@@ -27,22 +26,22 @@
             font-family: 'Segoe UI', Roboto, sans-serif;
             overflow-x: hidden;
             background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, transparent 100%);
-            cursor: pointer;
             user-select: none;
-            padding-bottom: 100px; /* مساحة للساعة تحت */
+            padding-bottom: 80px;
         }
 
         .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; text-align: center; }
 
         header { padding: 40px 0; }
         header h1 {
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 8vw, 4rem);
             letter-spacing: 5px;
             background: linear-gradient(90deg, var(--accent-color), var(--neon-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
             font-weight: 900;
+            text-transform: uppercase;
         }
 
         .status-bar {
@@ -53,8 +52,14 @@
             font-size: 0.8rem;
             color: var(--accent-color);
             margin-bottom: 20px;
-            font-weight: bold;
             box-shadow: 0 0 10px var(--accent-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
         }
 
         .projects-grid {
@@ -68,107 +73,136 @@
             background: var(--card-bg);
             border: 1px solid #1a1a1a;
             border-radius: 12px;
-            padding: 20px;
-            transition: 0.3s;
+            padding: 25px;
+            transition: 0.4s;
             text-align: right;
             position: relative;
+            overflow: hidden;
         }
 
-        .card:hover { border-color: var(--accent-color); transform: translateY(-5px); box-shadow: 0 0 15px rgba(0, 212, 255, 0.2); }
-        .card h3 { color: #fff; margin-bottom: 10px; font-size: 1.3rem; }
-        .card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.4; margin-bottom: 10px;}
+        .card:hover { 
+            border-color: var(--accent-color); 
+            transform: translateY(-8px); 
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.1); 
+        }
 
-        .tag { color: var(--accent-color); font-size: 0.7rem; text-transform: uppercase; border: 1px solid; padding: 2px 5px; border-radius: 3px; }
+        .card h3 { color: #fff; margin-bottom: 12px; font-size: 1.4rem; }
+        .card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.5; }
 
-        footer { margin-top: 60px; padding: 40px 0; }
+        .tag { 
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent-color); 
+            font-size: 0.7rem; 
+            padding: 3px 8px; 
+            border-radius: 4px;
+            border: 1px solid var(--accent-color);
+        }
+
+        footer { margin-top: 50px; padding: 20px; }
         .contact-btn {
             display: inline-block;
-            padding: 15px 35px;
-            border: 2px solid var(--accent-color);
-            color: var(--accent-color);
+            padding: 16px 40px;
+            background: linear-gradient(45deg, var(--accent-color), var(--neon-purple));
+            color: #000;
             text-decoration: none;
             font-weight: bold;
-            border-radius: 5px;
+            border-radius: 8px;
             transition: 0.3s;
-            background: rgba(0, 212, 255, 0.05);
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
         }
 
-        .contact-btn:hover { background: var(--accent-color); color: #000; box-shadow: 0 0 30px var(--accent-color); }
+        .contact-btn:hover { transform: scale(1.05); box-shadow: 0 0 40px var(--accent-color); }
 
-        /* تعديل الساعة والبيانات باش ميتغطوش */
         .info-panel {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             font-family: monospace;
             color: var(--accent-color);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             background: rgba(0, 0, 0, 0.9);
-            padding: 10px 20px;
+            padding: 12px 25px;
             border-top: 1px solid var(--accent-color);
             display: flex;
             justify-content: space-between;
             z-index: 1000;
         }
+
+        /* رسالة تذكير بالضغط لتشغيل الصوت */
+        #audio-hint {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 212, 255, 0.9);
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            z-index: 2000;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body onclick="startExperience()">
 
-    <audio id="bgMusic" loop preload="auto">
-        <source src="https://files.freemusicarchive.org/storage-freemusicarchive-org/tracks/6V/R8/6VR8Kz2wK19I6x5A.mp3" type="audio/mpeg">
+    <div id="audio-hint">إضغط في أي مكان لتفعيل الصوت ⚡</div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/audio/2023/05/08/audio_82c3f8f108.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
         <header>
-            <div id="welcome-msg" class="status-bar">SYSTEM INITIALIZED</div>
-            <h1>LOUAY SYSTEMS</h1>
-            <p style="color: #888; margin-top: 10px;">Advanced Cyber Solutions & Automation Engineering</p>
+            <div id="welcome-msg" class="status-bar">LOUAY_SYSTEMS_ACTIVE</div>
+            <h1>LOUAY</h1>
+            <p style="color: #666; margin-top: 10px; letter-spacing: 2px;">CYBERNETIC AUTOMATION & SMM EXPERT</p>
         </header>
 
         <div class="projects-grid">
             <div class="card">
-                <h3>SMM بوت تلغرام دفع تلقائي</h3>
-                <p>إدارة كاملة للمبيعات والطلبات بنظام API سريع ومتطور.</p>
+                <h3>SMM بوت تلغرام</h3>
+                <p>نظام دفع وتزويد تلقائي عبر API متصل بأقوى السيرفرات العالمية.</p>
                 <span class="tag">Active</span>
             </div>
             <div class="card">
-                <h3>بوابات دفع بريدي موب</h3>
-                <p>حلول دفع تلقائية مرتبطة بتطبيق Baridimob لسهولة المعاملات.</p>
+                <h3>بوابات دفع DZ</h3>
+                <p>ربط تلقائي مع Baridimob وChargily لتسهيل التجارة في الجزائر.</p>
                 <span class="tag">Secure</span>
             </div>
             <div class="card">
-                <h3>برمجة أدوات Termux</h3>
-                <p>سكريبتات بايثون مخصصة للأتمتة وفحص الأنظمة من الهاتف.</p>
-                <span class="tag">Dev</span>
+                <h3>Termux Scripts</h3>
+                <p>سكريبتات بايثون متقدمة للأتمتة وفحص المواقع واستخراج البيانات.</p>
+                <span class="tag">Tools</span>
             </div>
             <div class="card">
-                <h3>تزويد متابعين وتفاعل</h3>
-                <p>أنظمة زيادة المتابعين على جميع المنصات بأقل الأسعار.</p>
+                <h3>خدمات السوشيال ميديا</h3>
+                <p>تزويد متابعين، لايكات، ومشاهدات بجودة عالية وسرعة فائقة.</p>
                 <span class="tag">SMM Pro</span>
             </div>
             <div class="card">
-                <h3>شحن جواهر وألعاب</h3>
-                <p>متجر متكامل لشحن Free Fire وغيرها بتسليم فوري.</p>
-                <span class="tag">Verified</span>
+                <h3>شحن جواهر الألعاب</h3>
+                <p>شحن فوري ومضمون لـ Free Fire و PUBG عبر المعرف (ID).</p>
+                <span class="tag">Gaming</span>
             </div>
             <div class="card">
-                <h3>هندسة عكسية وتشفير</h3>
-                <p>حماية السكريبتات وفك التشفير للأغراض البرمجية المتقدمة.</p>
-                <span class="tag">Special</span>
+                <h3>Reverse Engineering</h3>
+                <p>تحليل الأكواد، تشفير الملفات، وتطوير أنظمة الحماية المتقدمة.</p>
+                <span class="tag">Expert</span>
             </div>
         </div>
 
         <footer>
-            <a href="https://t.me/VJF_X" class="contact-btn">TELEGRAM CONTACT</a>
-            <p style="margin-top: 20px; font-size: 0.7rem; color: #444;">&copy; 2026 LOUAY CORE | Ain Beida Node</p>
+            <a href="https://t.me/VJF_X" class="contact-btn">اتصل بي عبر تلغرام</a>
+            <p style="margin-top: 20px; font-size: 0.7rem; color: #333;">&copy; 2026 CORE LOGIC | BY LOUAY</p>
         </footer>
     </div>
 
     <div class="info-panel">
         <div>TIME: <span id="clock">00:00:00</span></div>
-        <div>LOC: <span id="user-country">GLOBAL</span></div>
         <div>IP: <span id="user-ip">DETECTING...</span></div>
+        <div>NODE: <span id="user-country">DZ</span></div>
     </div>
 
     <script>
@@ -182,26 +216,22 @@
             try {
                 const response = await fetch('https://ipapi.co/json/');
                 const data = await response.json();
-                document.getElementById('user-country').innerText = data.country_name;
+                document.getElementById('user-country').innerText = data.country_code;
                 document.getElementById('user-ip').innerText = data.ip;
-                
                 const welcome = document.getElementById('welcome-msg');
-                if(data.country_code === 'DZ') welcome.innerText = "مرحباً بك يا ابن الجزائر 🇩🇿";
-                else welcome.innerText = "ACCESS GRANTED FROM " + data.country_name;
-            } catch (e) {
-                document.getElementById('welcome-msg').innerText = "CORE SECURED";
-            }
+                if(data.country_code === 'DZ') welcome.innerText = "مرحباً بك يا ولد بلادي (الجزائر) 🇩🇿";
+            } catch (e) { }
         }
         detectUser();
 
         function startExperience() {
             const audio = document.getElementById('bgMusic');
             audio.play();
-            // لضمان استمرار الموسيقى حتى لو ضغط مرة ثانية
-            document.body.onclick = null; 
+            // إخفاء رسالة التنبيه بعد الضغط
+            document.getElementById('audio-hint').style.display = 'none';
+            document.body.onclick = null;
         }
 
-        // إيقاف عند الخروج والتشغيل عند العودة
         document.addEventListener("visibilitychange", function() {
             const audio = document.getElementById('bgMusic');
             if (document.hidden) audio.pause();
