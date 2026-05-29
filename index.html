@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOUAY CORE</title>
+    <title>LOUAY CORE | FULL ARCHITECTURE</title>
     <style>
         :root { --blue: #00f3ff; --purple: #bc13fe; --bg: #010103; }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Consolas', monospace; }
         body { background: var(--bg); color: white; overflow-x: hidden; user-select: none; }
 
         .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; text-align: center; }
-        .glitch-title { font-size: 4rem; color: var(--blue); text-shadow: 3px 3px var(--purple); letter-spacing: 15px; font-weight: 900; cursor: pointer; }
+        .glitch-title { font-size: 4rem; color: var(--blue); text-shadow: 3px 3px var(--purple); letter-spacing: 15px; font-weight: 900; cursor: pointer; position: relative; }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 60px; }
-        .card { background: rgba(10, 10, 25, 0.9); border: 1px solid rgba(0, 243, 255, 0.1); padding: 35px; border-radius: 2px; position: relative; transition: 0.3s; }
+        .card { background: rgba(10, 10, 25, 0.9); border: 1px solid rgba(0, 243, 255, 0.1); padding: 35px; border-radius: 2px; position: relative; transition: 0.3s; overflow: hidden; }
         .card:hover { border-color: var(--blue); transform: translateY(-5px); box-shadow: 0 0 20px rgba(0, 243, 255, 0.2); }
         .card h3 { color: var(--blue); margin-bottom: 15px; font-size: 1.5rem; }
         .card p { color: #888; font-size: 0.9rem; line-height: 1.6; }
 
+        /* لوحة التحكم السرية */
         #ghostAdmin {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000;
             z-index: 10000; display: none; padding: 30px; border: 2px solid var(--purple);
@@ -31,11 +32,11 @@
         @keyframes scan { from {top: 0} to {top: 100%} }
     </style>
 </head>
-<body onclick="startProtocol()">
+<body onclick="startProtocol()" ontouchstart="startProtocol()">
 
     <div class="scan-line"></div>
     
-    <audio id="mainRadio" crossorigin="anonymous">
+    <audio id="mainRadio" crossorigin="anonymous" loop>
         <source src="https://stream.zeno.fm/f96at866380uv" type="audio/mpeg">
     </audio>
 
@@ -46,10 +47,22 @@
         </header>
 
         <div class="grid">
-            <div class="card"><h3>SMM_PROTOCOL</h3><p>أتمتة كاملة لخدمات السوشيال ميديا عبر بروتوكولات API سحابية.</p></div>
-            <div class="card"><h3>BINANCE_PAY</h3><p>بوابات دفع آمنة ومعالجة معاملات BinancePay والمحافظ الرقمية بتشفير عالي.</p></div>
-            <div class="card"><h3>ROOT_TOOLS</h3><p>تطوير أدوات الأتمتة المخصصة لبيئات Termux.</p></div>
-            <div class="card"><h3>MAIL_SYSTEM</h3><p>بوت إنشاء إيميلات دومين خاص بشكل آلي تماماً.</p></div>
+            <div class="card">
+                <h3>SMM_PROTOCOL</h3>
+                <p>أتمتة كاملة لخدمات السوشيال ميديا عبر بروتوكولات API سحابية.</p>
+            </div>
+            <div class="card">
+                <h3>BINANCE_PAY</h3>
+                <p>بوابات دفع آمنة ومعالجة معاملات BinancePay والمحافظ الرقمية بتشفير عالي.</p>
+            </div>
+            <div class="card">
+                <h3>ROOT_TOOLS</h3>
+                <p>تطوير أدوات الأتمتة المخصصة لبيئات Termux والأنظمة الذكية.</p>
+            </div>
+            <div class="card">
+                <h3>MAIL_SYSTEM</h3>
+                <p>بوت إنشاء إيميلات دومين خاص بشكل آلي تماماً لتجاوز التحققات.</p>
+            </div>
         </div>
         
         <a href="https://t.me/VJF_X" style="display:inline-block; margin-top: 60px; color: var(--blue); text-decoration: none; border: 1px solid; padding: 15px 40px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase;">CONTACT ME</a>
@@ -62,7 +75,7 @@
                 <button onclick="hideAdmin()" style="color: red; background: none; border: none; cursor: pointer;">[ CLOSE ]</button>
             </div>
             <div style="margin: 30px 0;">
-                <button class="btn-ctrl" onclick="alert('Broadcasting...')">SEND_ALERT</button>
+                <button class="btn-ctrl" onclick="alert('System Broadcast Active')">SEND_ALERT</button>
                 <button class="btn-ctrl" onclick="window.location.href='https://google.com'">EJECT_ALL</button>
                 <button class="btn-ctrl" onclick="localStorage.clear(); location.reload();" style="border-color: red; color: red;">WIPE_LOGS</button>
             </div>
@@ -80,21 +93,21 @@
         const audio = document.getElementById('mainRadio');
         let radioStarted = false;
 
-        // دالة تشغيل الموسيقى عند أول تفاعل
+        // دالة تشغيل الموسيقى (تشتغل مع أول لمسة 100%)
         function startProtocol() {
             if(!radioStarted) {
                 audio.play().then(() => {
                     radioStarted = true;
-                }).catch(e => console.log("Init audio..."));
+                }).catch(e => console.log("Audio waiting for interaction..."));
             }
         }
 
-        // لوحة التحكم
+        // دخول الأدمين (4 ضغطات على اسمك)
         let clicks = 0;
         document.getElementById('adminTrigger').onclick = () => {
             clicks++;
             if(clicks >= 4) {
-                let p = prompt("ENTER ACCESS KEY:");
+                let p = prompt("ACCESS KEY:");
                 if(p === "0781262864") showAdmin();
                 else alert("FAILED");
                 clicks = 0;
@@ -104,6 +117,7 @@
         function showAdmin() { document.getElementById('ghostAdmin').style.display = 'block'; }
         function hideAdmin() { document.getElementById('ghostAdmin').style.display = 'none'; }
 
+        // نظام الـ IP
         async function getIP() {
             try {
                 const res = await fetch('https://api.ipify.org?format=json');
@@ -122,7 +136,7 @@
         function renderLogs() {
             const logs = JSON.parse(localStorage.getItem('adminLogs') || '[]');
             document.getElementById('visitorLogs').innerHTML = logs.map(l => `
-                <div class="visitor-row">[${l.time}] > IP_DETECTED: ${l.ip}</div>
+                <div class="visitor-row">[${l.time}] > IP: ${l.ip}</div>
             `).join('');
         }
 
