@@ -27,6 +27,7 @@
                 linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
             background-size: 100% 100%, 30px 30px, 30px 30px;
+            cursor: pointer;
         }
 
         .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
@@ -136,13 +137,13 @@
 </head>
 <body onclick="playAudio()">
 
-    <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+    <audio id="myAudio" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
     </audio>
 
     <div class="container">
         <header>
-            <div class="status-bar">AUDIO SYSTEM ACTIVE // CLICK ANYWHERE</div>
+            <div class="status-bar">SYSTEM INITIALIZED // TAP TO UNMUTE</div>
             <h1>LOUAY</h1>
             <p class="bio">خبير في الأنظمة المتقدمة وأتمتة المهام. مطور حلول رقمية بلمسة المستقبل 2026. كل الأكواد محمية ومخصصة للأداء العالي.</p>
         </header>
@@ -168,24 +169,6 @@
 
             <div class="card">
                 <div>
-                    <span class="tag">E-Commerce</span>
-                    <h3>موقع شحن ألعاب وحسابات</h3>
-                    <p>منصة تجارة إلكترونية متطورة مخصصة للاعبين مع نظام معالجة طلبات أوتوماتيكي.</p>
-                </div>
-                <div class="tag">Live System</div>
-            </div>
-
-            <div class="card">
-                <div>
-                    <span class="tag">Mail System</span>
-                    <h3>بوت إنشاء إيميلات دومين خاص</h3>
-                    <p>أداة تتيح إنشاء بريد إلكتروني مؤقت أو دائم على دومينات خاصة بشكل آلي ومحمي.</p>
-                </div>
-                <div class="tag">Automated</div>
-            </div>
-
-            <div class="card">
-                <div>
                     <span class="tag">Security</span>
                     <h3>ماسح ثغرات الشبكات الذكي</h3>
                     <p>أداة مخصصة لفحص نقاط الضعف في الشبكات المحلية واستخراج التقارير الأمنية بدقة.</p>
@@ -195,11 +178,11 @@
 
             <div class="card">
                 <div>
-                    <span class="tag">Data</span>
-                    <h3>محرك استخراج البيانات الضخمة</h3>
-                    <p>سكريبت بايثون متطور لسحب وتحليل البيانات من مواقع التواصل الاجتماعي والمواقع التجارية.</p>
+                    <span class="tag">E-Commerce</span>
+                    <h3>موقع شحن ألعاب وحسابات</h3>
+                    <p>منصة تجارة إلكترونية متطورة مخصصة للاعبين مع نظام معالجة طلبات أوتوماتيكي.</p>
                 </div>
-                <div class="tag">Python Core</div>
+                <div class="tag">Live System</div>
             </div>
         </div>
 
@@ -218,10 +201,13 @@
     </div>
 
     <script>
+        // دالة تشغيل الصوت بمجرد التفاعل مع الصفحة
         function playAudio() {
-            var audio = document.getElementById("bgMusic");
-            audio.play();
-            // لضمان أن الصوت يبدأ مرة واحدة فقط عند أول ضغطة
+            var audio = document.getElementById("myAudio");
+            audio.play().catch(function(error) {
+                console.log("Autoplay prevented by browser. Wait for user interaction.");
+            });
+            // حذف الحدث بعد التشغيل الأول لعدم تكرار الدالة
             document.body.onclick = null;
         }
     </script>
