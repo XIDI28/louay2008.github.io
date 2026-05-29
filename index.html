@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -16,11 +15,7 @@
             --border-glow: rgba(0, 212, 255, 0.3);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-color);
@@ -34,19 +29,9 @@
             background-size: 100% 100%, 30px 30px, 30px 30px;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
 
-        /* Futuristic Header */
-        header {
-            text-align: center;
-            padding: 60px 0;
-            position: relative;
-        }
-
+        header { text-align: center; padding: 60px 0; }
         header h1 {
             font-size: 4rem;
             letter-spacing: 5px;
@@ -70,15 +55,8 @@
             margin-bottom: 20px;
         }
 
-        .bio {
-            font-size: 1.2rem;
-            color: var(--text-dim);
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.6;
-        }
+        .bio { font-size: 1.2rem; color: var(--text-dim); max-width: 700px; margin: 0 auto; line-height: 1.6; }
 
-        /* Projects Grid */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -99,49 +77,15 @@
             justify-content: space-between;
         }
 
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-            transform: translateX(-100%);
-            transition: 0.5s;
-        }
-
         .card:hover {
             transform: translateY(-10px) scale(1.02);
             border-color: var(--accent-color);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px var(--border-glow);
         }
 
-        .card:hover::before {
-            transform: translateX(100%);
-        }
-
-        .card h3 {
-            color: #fff;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card h3::before {
-            content: ">>";
-            color: var(--accent-color);
-            font-family: monospace;
-        }
-
-        .card p {
-            color: var(--text-dim);
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
+        .card h3 { color: #fff; font-size: 1.5rem; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
+        .card h3::before { content: ">>"; color: var(--accent-color); font-family: monospace; }
+        .card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.5; margin-bottom: 20px; }
 
         .tag {
             display: inline-block;
@@ -154,7 +98,6 @@
             border: 1px solid rgba(0, 212, 255, 0.2);
         }
 
-        /* Visual Element for 2026 Vibes */
         .vibe-2026 {
             position: fixed;
             bottom: 30px;
@@ -164,23 +107,18 @@
             opacity: 0.4;
             pointer-events: none;
             text-align: right;
+            font-size: 0.8rem;
         }
 
-        footer {
-            margin-top: 80px;
-            padding: 40px 0;
-            text-align: center;
-            border-top: 1px solid #1a1a1a;
-            color: var(--text-dim);
-        }
+        footer { margin-top: 80px; padding: 40px 0; text-align: center; border-top: 1px solid #1a1a1a; color: var(--text-dim); }
 
         .contact-btn {
             display: inline-block;
             margin-top: 20px;
-            padding: 12px 30px;
+            padding: 15px 40px;
             background: transparent;
             color: var(--accent-color);
-            border: 1px solid var(--accent-color);
+            border: 2px solid var(--accent-color);
             border-radius: 5px;
             text-decoration: none;
             font-weight: bold;
@@ -192,13 +130,10 @@
         .contact-btn:hover {
             background: var(--accent-color);
             color: #000;
-            box-shadow: 0 0 20px var(--accent-color);
+            box-shadow: 0 0 30px var(--accent-color);
         }
 
-        @media (max-width: 600px) {
-            header h1 { font-size: 2.5rem; }
-            .container { padding: 20px; }
-        }
+        @media (max-width: 600px) { header h1 { font-size: 2.5rem; } }
     </style>
 </head>
 <body>
@@ -207,15 +142,15 @@
         <header>
             <div class="status-bar">SYSTEM ONLINE // SECURED ACCESS</div>
             <h1>LOUAY</h1>
-            <p class="bio">خبير في الأنظمة المتقدمة وأتمتة المهام. مطور حلول رقمية بلمسة المستقبل. كل الأكواد محمية ومخصصة للأداء العالي.</p>
+            <p class="bio">خبير في الأنظمة المتقدمة وأتمتة المهام. مطور حلول رقمية بلمسة المستقبل 2026. كل الأكواد محمية ومخصصة للأداء العالي.</p>
         </header>
 
         <div class="projects-grid">
             <div class="card">
                 <div>
-                    <span class="tag">System</span>
+                    <span class="tag">Automation</span>
                     <h3>بوت تلغرام دفع تلقائي SMM</h3>
-                    <p>نظام متكامل يدير عمليات الدفع واستلام الطلبات بشكل لحظي. مرتبط بأقوى مزودي الخدمات لضمان السرعة والدقة.</p>
+                    <p>نظام متكامل يدير عمليات الدفع واستلام الطلبات بشكل لحظي مرتبط بأقوى مزودي الخدمات.</p>
                 </div>
                 <div class="tag">Private Logic</div>
             </div>
@@ -224,16 +159,16 @@
                 <div>
                     <span class="tag">Financial</span>
                     <h3>سكريبتات دفع جميع المحافظ</h3>
-                    <p>هندسة برمجية تدعم بوابات الدفع الإلكتروني لأكثر المحافظ استخداماً. مجهز بنظام حماية عالي ضد التلاعب.</p>
+                    <p>بوابات دفع إلكتروني تدعم جميع المحافظ الرقمية مع نظام حماية عالي ضد التلاعب.</p>
                 </div>
                 <div class="tag">Encrypted</div>
             </div>
 
             <div class="card">
                 <div>
-                    <span class="tag">Web</span>
+                    <span class="tag">E-Commerce</span>
                     <h3>موقع شحن ألعاب وحسابات</h3>
-                    <p>منصة تجارة إلكترونية متطورة مخصصة للاعبين، توفر واجهة مستخدم سلسة ونظام معالجة طلبات أوتوماتيكي.</p>
+                    <p>منصة تجارة إلكترونية متطورة مخصصة للاعبين مع نظام معالجة طلبات أوتوماتيكي.</p>
                 </div>
                 <div class="tag">Live System</div>
             </div>
@@ -242,23 +177,42 @@
                 <div>
                     <span class="tag">Mail System</span>
                     <h3>بوت إنشاء إيميلات دومين خاص</h3>
-                    <p>أداة تتيح إنشاء بريد إلكتروني مؤقت أو دائم على دومينات خاصة بشكل آلي ومحمي تماماً من السبام.</p>
+                    <p>أداة تتيح إنشاء بريد إلكتروني مؤقت أو دائم على دومينات خاصة بشكل آلي ومحمي.</p>
                 </div>
                 <div class="tag">Automated</div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <span class="tag">Security</span>
+                    <h3>ماسح ثغرات الشبكات الذكي</h3>
+                    <p>أداة مخصصة لفحص نقاط الضعف في الشبكات المحلية واستخراج التقارير الأمنية بدقة.</p>
+                </div>
+                <div class="tag">Advanced</div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <span class="tag">Data</span>
+                    <h3>محرك استخراج البيانات الضخمة</h3>
+                    <p>سكريبت بايثون متطور لسحب وتحليل البيانات من مواقع التواصل الاجتماعي والمواقع التجارية.</p>
+                </div>
+                <div class="tag">Python Core</div>
             </div>
         </div>
 
         <footer>
             <p>تواصل مع المطور لتفاصيل أكثر</p>
-            <a href="https://t.me/YourTelegramUsername" class="contact-btn">Telegram Contact</a>
+            <a href="https://t.me/VJF_X" class="contact-btn">TELEGRAM CONTACT</a>
             <p style="margin-top: 20px; font-size: 0.7rem;">&copy; LOUAY_SYSTEMS_CORE_2026</p>
         </footer>
     </div>
 
     <div class="vibe-2026">
         CORE_LOADED: 100%<br>
-        LOCATION: DZ_NODE<br>
-        LEVEL: ADVANCED
+        LOCATION: DZ_NODE_OUB<br>
+        LEVEL: ADVANCED<br>
+        STATUS: ENCRYPTED
     </div>
 
 </body>
