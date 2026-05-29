@@ -3,38 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LOUAY CORE | MASTER_NODE_8762532793</title>
+    <title>LOUAY CORE | 2070 PROTOCOL</title>
     <style>
         :root { --blue: #00f3ff; --purple: #bc13fe; --bg: #010103; }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Consolas', 'Courier New', monospace; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Consolas', monospace; }
         body { background: var(--bg); color: white; overflow-x: hidden; user-select: none; }
 
         .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; text-align: center; }
-        .glitch-title { font-size: 4rem; color: var(--blue); text-shadow: 3px 3px var(--purple); letter-spacing: 15px; font-weight: 900; cursor: pointer; transition: 0.3s; }
-        .glitch-title:hover { transform: scale(1.05); text-shadow: 0 0 20px var(--blue); }
+        .glitch-title { font-size: 4rem; color: var(--blue); text-shadow: 3px 3px var(--purple); letter-spacing: 15px; font-weight: 900; cursor: pointer; }
 
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 60px; }
-        .card { background: rgba(10, 10, 25, 0.9); border: 1px solid rgba(0, 243, 255, 0.1); padding: 35px; transition: 0.5s; position: relative; border-radius: 2px; }
-        .card:hover { border-color: var(--blue); transform: translateY(-10px); box-shadow: 0 10px 40px rgba(0,243,255,0.3); }
-        .card h3 { color: var(--blue); margin-bottom: 15px; font-size: 1.5rem; text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); }
+        .card { background: rgba(10, 10, 25, 0.9); border: 1px solid rgba(0, 243, 255, 0.1); padding: 35px; transition: 0.5s; border-radius: 2px; position: relative; }
+        .card:hover { border-color: var(--blue); transform: translateY(-10px) skewX(-2deg); box-shadow: 0 10px 40px rgba(0,243,255,0.3); }
+        .card h3 { color: var(--blue); margin-bottom: 15px; font-size: 1.5rem; }
         .card p { color: #888; font-size: 0.9rem; line-height: 1.6; }
 
         /* Ghost Admin Terminal */
         #ghostAdmin {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000;
             z-index: 10000; display: none; padding: 30px; border: 2px solid var(--purple);
-            animation: bootUp 0.5s;
         }
-        @keyframes bootUp { from {opacity: 0; transform: scale(0.9);} to {opacity: 1; transform: scale(1);} }
         .visitor-row { background: #080808; padding: 12px; margin-bottom: 8px; border-left: 5px solid var(--blue); font-size: 0.85rem; color: #00ff00; }
 
         .bottom-bar { position: fixed; bottom: 0; width: 100%; background: #000; border-top: 1px solid var(--blue); padding: 12px 25px; display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--blue); z-index: 999; }
         
-        .btn-ctrl { background: transparent; border: 1px solid var(--blue); color: var(--blue); padding: 10px 20px; cursor: pointer; margin: 5px; font-weight: bold; transition: 0.3s; text-transform: uppercase; }
-        .btn-ctrl:hover { background: var(--blue); color: #000; box-shadow: 0 0 20px var(--blue); }
+        .btn-ctrl { background: transparent; border: 1px solid var(--blue); color: var(--blue); padding: 10px 20px; cursor: pointer; margin: 5px; font-weight: bold; }
+        .btn-ctrl:hover { background: var(--blue); color: #000; }
 
-        .scan-line { width: 100%; height: 3px; background: rgba(188, 19, 254, 0.2); position: fixed; top: 0; z-index: 10001; pointer-events: none; animation: scanAnim 8s linear infinite; }
-        @keyframes scanAnim { from { top: 0; } to { top: 100%; } }
+        .scan-line { width: 100%; height: 2px; background: rgba(0, 243, 255, 0.1); position: fixed; top: 0; z-index: 10001; pointer-events: none; animation: scan 6s linear infinite; }
+        @keyframes scan { from {top: 0} to {top: 100%} }
     </style>
 </head>
 <body onclick="activateSystem()">
@@ -46,54 +43,49 @@
 
     <div class="container">
         <header>
-            <div style="font-size: 0.7rem; color: var(--purple); margin-bottom: 10px;">ID: 8762532793 | STATUS: VERIFIED</div>
+            <div style="font-size: 0.7rem; color: var(--purple); margin-bottom: 10px;">[ SYSTEM_READY_FOR_OPERATOR ]</div>
             <h1 class="glitch-title" id="adminTrigger">LOUAY</h1>
-            <p style="color: #555; margin-top: 15px; letter-spacing: 5px;">CYBERNETIC OPERATIONS | 2070 GLOBAL</p>
+            <p style="color: #444; margin-top: 15px; letter-spacing: 5px;">NEURAL ARCHITECT | 2070 GLOBAL</p>
         </header>
 
         <div class="grid">
-            <div class="card"><h3>SMM_PROTOCOL</h3><p>أتمتة كاملة لخدمات التواصل الاجتماعي عبر بروتوكولات API سحابية مشفرة.</p></div>
-            <div class="card"><h3>CIPHER_PAY_DZ</h3><p>بوابات دفع آمنة ومعالجة معاملات Baridimob بنظام التشفير العسكري.</p></div>
-            <div class="card"><h3>ROOT_SCRIPTS</h3><p>تطوير أدوات الأتمتة المخصصة لبيئات Termux والتحكم في الشبكات.</p></div>
+            <div class="card"><h3>SMM_PROTOCOL</h3><p>أتمتة كاملة لخدمات السوشيال ميديا عبر بروتوكولات API سحابية.</p></div>
+            <div class="card"><h3>CIPHER_PAY</h3><p>بوابات دفع آمنة ومعالجة معاملات Baridimob بتشفير عالي.</p></div>
+            <div class="card"><h3>ROOT_TOOLS</h3><p>تطوير أدوات الأتمتة المخصصة لبيئات Termux.</p></div>
         </div>
         
-        <a href="https://t.me/VJF_X" style="display:inline-block; margin-top: 60px; color: var(--blue); text-decoration: none; border: 1px solid; padding: 15px 40px; font-weight: bold; letter-spacing: 3px; background: rgba(0, 243, 255, 0.05);">CONNECT_MASTER</a>
+        <a href="https://t.me/VJF_X" style="display:inline-block; margin-top: 60px; color: var(--blue); text-decoration: none; border: 1px solid; padding: 15px 40px; font-weight: bold; letter-spacing: 3px;">ESTABLISH_LINK</a>
     </div>
 
     <div id="ghostAdmin">
         <div style="max-width: 900px; margin: 0 auto;">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2 style="color: var(--purple); letter-spacing: 5px;">LOUAY_TERMINAL [ADMIN]</h2>
-                <button onclick="hideAdmin()" style="color: red; background: none; border: none; font-size: 1.5rem; cursor: pointer;">[ CLOSE ]</button>
+            <div style="display: flex; justify-content: space-between;">
+                <h2 style="color: var(--purple);">LOUAY_TERMINAL [GHOST_MODE]</h2>
+                <button onclick="hideAdmin()" style="color: red; background: none; border: none; cursor: pointer;">[ CLOSE ]</button>
             </div>
-            <div style="margin: 20px 0; color: #444; font-size: 0.8rem;">OPERATOR ID: 8762532793 | ACCESS_LEVEL: GOD_MODE</div>
-            
-            <div style="margin-bottom: 30px;">
-                <button class="btn-ctrl" onclick="alert('SYSTEM NOTICE: Broadcast sent to all nodes.')">SEND_ALERT</button>
+            <div style="margin: 30px 0;">
+                <button class="btn-ctrl" onclick="alert('Broadcast active.')">SEND_ALERT</button>
                 <button class="btn-ctrl" onclick="window.location.href='https://google.com'">EJECT_ALL</button>
-                <button class="btn-ctrl" onclick="localStorage.clear(); location.reload();" style="border-color: red; color: red;">WIPE_MEMORY</button>
+                <button class="btn-ctrl" onclick="localStorage.clear(); location.reload();" style="border-color: red; color: red;">WIPE_LOGS</button>
             </div>
-
-            <h3 style="color: var(--blue); margin-bottom: 15px;">LIVE_ACTIVITY_LOGS:</h3>
-            <div id="visitorLogs" style="height: 55vh; overflow-y: auto; background: #050505; padding: 15px; border: 1px solid #111;">
-                </div>
+            <h3 style="color: var(--blue); margin-bottom: 15px;">VISITOR_DATABASE:</h3>
+            <div id="visitorLogs" style="height: 55vh; overflow-y: auto; background: #050505; padding: 15px; border: 1px solid #111;"></div>
         </div>
     </div>
 
     <div class="bottom-bar">
-        <div>SERVER: <span style="color: #0f0;">ALGERIA_CORE</span></div>
+        <div>CORE: <span style="color: #0f0;">ONLINE</span></div>
         <div id="clock">00:00:00</div>
-        <div>IP: <span id="userIp">---.---.---</span></div>
+        <div>SECURE: YES</div>
     </div>
 
     <script>
         const audio = document.getElementById('coreMusic');
         let sysActive = false;
 
-        // 1. إدارة الموسيقى (بمجرد لمس الشاشة)
         function activateSystem() {
             if(!sysActive) {
-                audio.play().catch(e => console.log("Audio Error"));
+                audio.play();
                 sysActive = true;
             }
         }
@@ -102,7 +94,7 @@
             else if(sysActive) audio.play();
         });
 
-        // 2. الدخول السري (0781262864) أو 5 ضغطات على الاسم
+        // الدخول السري (0781262864)
         let passKey = "";
         window.addEventListener("keydown", (e) => {
             passKey += e.key;
@@ -110,21 +102,20 @@
             if(passKey.length > 15) passKey = "";
         });
 
-        let clickCounter = 0;
+        // للهاتف: 5 ضغطات على الاسم
+        let clickCount = 0;
         document.getElementById('adminTrigger').onclick = () => {
-            clickCounter++;
-            if(clickCounter >= 5) { showAdmin(); clickCounter = 0; }
+            clickCount++;
+            if(clickCount >= 5) { showAdmin(); clickCount = 0; }
         };
 
         function showAdmin() { document.getElementById('ghostAdmin').style.display = 'block'; }
         function hideAdmin() { document.getElementById('ghostAdmin').style.display = 'none'; }
 
-        // 3. تتبع الزوار (IP و الموقع)
         async function runTracker() {
             try {
                 const res = await fetch('https://ipapi.co/json/');
                 const d = await res.json();
-                document.getElementById('userIp').innerText = d.ip;
                 const log = {
                     ip: d.ip,
                     city: d.city,
@@ -146,14 +137,8 @@
             `).join('');
         }
         runTracker();
-
-        // منع القائمة اليمنى
         document.oncontextmenu = () => false;
-
-        // الساعة الرقمية
-        setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString();
-        }, 1000);
+        setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
     </script>
 </body>
 </html>
